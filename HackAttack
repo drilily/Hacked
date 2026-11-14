@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HACKER ZONE</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #000;
+  color: #00ff66;
+  font-family: monospace;
+  overflow-x: hidden;
+}
+
+/* MATRIX */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  opacity: 0.35;
+}
+
+.container {
+  width: 90%;
+  max-width: 700px;
+  margin: 70px auto;
+  padding: 30px;
+  background: rgba(0, 10, 5, 0.9);
+  border: 2px solid #00ff66;
+  border-radius: 15px;
+  box-shadow:
+    0 0 10px #00ff66,
+    0 0 30px #00ff66;
+  text-align: center;
+}
+
+h1 {
+  font-size: 42px;
+  text-shadow:
+    0 0 5px #00ff66,
+    0 0 20px #00ff66;
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.65;
+  }
+}
+
+.subtitle {
+  color: #66ff99;
+}
+
+.terminal {
+  margin-top: 25px;
+  padding: 20px;
+  background: #020202;
+  border: 1px solid #00ff66;
+  text-align: left;
+  min-height: 180px;
+  box-shadow: inset 0 0 15px #003311;
+}
+
+.line {
+  margin: 8px 0;
+}
+
+.cursor {
+  animation: cursor 0.7s infinite;
+}
+
+@keyframes cursor {
+  50% {
+    opacity: 0;
+  }
+}
+
+button {
+  margin-top: 25px;
+  padding: 14px 30px;
+  background: #00ff66;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 0 15px #00ff66;
+}
+
+button:hover {
+  background: #66ffaa;
+  transform: scale(1.05);
+}
+
+#access {
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="container">
+
+  <h1>☠ HACKER ZONE ☠</h1>
+
+  <p class="subtitle">
+    SYSTEM ONLINE...
+  </p>
+
+  <div class="terminal">
+    <div class="line">> Initializing system...</div>
+    <div class="line">> Checking connection...</div>
+    <div class="line">> Security: <b>ACTIVE</b></div>
+    <div class="line">> User: GUEST</div>
+    <div class="line">> Status: <b>ONLINE</b></div>
+    <div class="line">> <span class="cursor">█</span></div>
+  </div>
+
+  <button onclick="accessGranted()">
+    ⚡ ПОЛУЧИТЬ ДОСТУП ⚡
+  </button>
+
+  <div id="access"></div>
+
+  <p>© 2026 HACKER ZONE</p>
+
+</div>
+
+<script>
+
+/* MATRIX EFFECT */
+
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const letters =
+"01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&@";
+
+const fontSize = 16;
+const columns = canvas.width / fontSize;
+
+const drops = [];
+
+for (let i = 0; i < columns; i++) {
+  drops[i] = Math.random() * canvas.height;
+}
+
+function drawMatrix() {
+
+  ctx.fillStyle = "rgba(0,0,0,0.08)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.fillStyle = "#00ff66";
+  ctx.font = fontSize + "px monospace";
+
+  for (let i = 0; i < drops.length; i++) {
+
+    const text =
+      letters[Math.floor(Math.random() * letters.length)];
+
+    ctx.fillText(
+      text,
+      i * fontSize,
+      drops[i]
+    );
+
+    if (drops[i] > canvas.height &&
+        Math.random() > 0.975) {
+      drops[i] = 0;
+    }
+
+    drops[i] += fontSize;
+  }
+}
+
+setInterval(drawMatrix, 50);
+
+
+/* BUTTON */
+
+function accessGranted() {
+
+  const access = document.getElementById("access");
+
+  access.innerHTML =
+    "✓ ДОСТУП РАЗРЕШЁН!нет запрещён?!";
+
+  access.style.textShadow =
+    "0 0 15px #00ff66";
+
+}
+
+</script>
+
+</body>
+</html>
